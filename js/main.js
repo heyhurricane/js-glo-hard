@@ -11,4 +11,5 @@ console.log('result: ', result);
 
 result = result ** 3;
 
+alert(result.toString().slice(0, 2));
 console.log(result.toString().slice(0, 2));
