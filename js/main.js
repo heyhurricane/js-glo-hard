@@ -1,23 +1,50 @@
-"use strict";
+'use strict';
 
-let num = 266219;
+let lang = prompt('Введите язык (ru/en):').toLowerCase();
+console.log('lang: ', lang);
 
-let array1 = num.toString().split("");
-console.log('array1: ', array1);
+// if-else
+console.log("IF-ELSE:")
+if (lang === 'ru') {
+  console.log('Понедельник, Вторник, Среда, Четверг, Пятница, Суббота, Воскресенье');
+}
+else {
+  if (lang === 'en') {
+    console.log('Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday');
+  }
+}
 
-const reducer = (accumulator, currentValue) => accumulator * currentValue;
-let result = array1.reduce(reducer);
+// switch
+console.log("SWITCH:")
+switch (lang) {
+  case 'ru':
+    console.log('Понедельник, Вторник, Среда, Четверг, Пятница, Суббота, Воскресенье');
+    break;
+  case 'en':
+    console.log('Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday');
+    break;
+}
 
-// var result = 1;
+let array1 = [
+  ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
+  ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+];
 
-// for (let i=0; i<num.toString().length; i++) {
-//   result *= num.toString()[i];
-  
-// }
+// массивы
+console.log('МНОГОМЕРНЫЕ МАССИВЫ:')
 
-console.log('result: ', result);
+let numLanguage = (lang === 'ru') ? '0' : '1';
 
-result = result ** 3;
+console.log('numLanguage: ', numLanguage);
 
-// alert(result.toString().slice(0, 2));
-console.log(result.toString().slice(0, 2));
+for (let j = 0; j < array1[0].length; j++) {
+    console.log(array1[numLanguage][j]);
+}
+
+let namePerson = 'Дина';
+
+let result = (namePerson === 'Артем') ? 'директор' : 
+            (namePerson === 'Максим') ? 'преподаватель' : 'студент';
+
+console.log(result);
+
