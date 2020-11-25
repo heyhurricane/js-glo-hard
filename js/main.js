@@ -1,20 +1,29 @@
 'use strict';
 
-function func(data) {
-  if (typeof(data) !== 'string') {
-    console.log('Это не строка!');
-  }
-  else {
-    data = data.trim();
-    if (data.length > 30) {
-      let result='';
-      for (let i=0; i<30; i++) {
-        result += data[i];
-      }
-      result += '...';
-      console.log(result);
+const arr = ['23510', '12656', '3456', '42365', '50012', '24635', '78965'];
+
+let arraySearch = function(data) {
+  for (let i = 0; i < data.length; i++) {
+    if (data[i][0] === '2' || data[i][0] === '4') {
+      console.log(data[i]);
     }
   }
-}
+};
 
-func(' Карл у Клары украл рекламу, а Клара у Карла украла бюджет. ');
+arraySearch(arr);
+
+let simpleInt = function() {
+  for (let i = 2; i <= 100; i++) {
+    let count = 0;
+    for (let j = 2; j < i; j++) {
+      if ((i % j) === 0) { 
+        count++;
+      }
+    }
+    if (count === 0) {
+      console.log(i + ' Делители этого числа: 1 и ' + i);
+    }
+  }
+};
+
+simpleInt();
