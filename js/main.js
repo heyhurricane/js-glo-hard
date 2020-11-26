@@ -35,4 +35,4 @@ function guessTheNumber() {
   } 
 }
 
-let res = guessTheNumber();
+guessTheNumber();
