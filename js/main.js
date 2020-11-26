@@ -4,35 +4,50 @@ let isNumber = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
-// let userNum;
 
-function guessTheNumber() {
-  const number = 43;
-  let userNum = prompt('Угадай число от 1 до 100');
-  console.log('userNum: ', userNum);
-  if (userNum === null) {
-    alert('Игра окончена');
+function guessTheNumber(num, count) {
+  if (count === 0) {
+    const userConfirm = confirm('Попытки закончились, хотите сыграть еще?');
+    if (userConfirm === true) {
+      count = 10;
+      num = Math.floor(Math.random() * 100) + 1;
+      guessTheNumber(num, count);
+    }
   }
-  else
-  {
-    if (!isNumber(userNum)) {
-      alert('Введи число!');
-      guessTheNumber();
+  else {
+    let userNum = prompt('Угадай число от 1 до 100');
+    console.log('userNum: ', userNum);
+    if (userNum === null) {
+      alert('Игра окончена');
     }
-    else {
-      if (userNum > number) {
-        alert('Загаданное число меньше');
-        guessTheNumber();
+    else
+    {
+      if (!isNumber(userNum)) {
+        alert('Введи число!');
+        guessTheNumber(num, count);
       }
-      if (userNum < number) {
-        alert('Загаданное число больше');
-        guessTheNumber();
+      else {
+        if (userNum > num) {
+          count--;
+          alert('Загаданное число меньше, осталось попыток ' + count);
+          guessTheNumber(num, count);
+        }
+        if (userNum < num) {
+          count--;
+          alert('Загаданное число больше, осталось попыток ' + count);
+          guessTheNumber(num, count);
+        }
+        if (+userNum === num) {
+          const userConfirm = confirm('Поздравляю, Вы угадали!!! Хотели бы сыграть еще?');
+          if (userConfirm === true) {
+            count = 10;
+            num = Math.floor(Math.random() * 100) + 1;
+            guessTheNumber(num, count);
+          }
+        }
       }
-      if (+userNum === number) {
-        confirm('Поздравляю, Вы угадали!!!');
-      }
-    }
-  } 
+    } 
+  }
 }
 
-guessTheNumber();
+guessTheNumber(43, 10);
