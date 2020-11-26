@@ -5,7 +5,7 @@ let isNumber = function(n) {
 };
 
 function game() {
-  let num = 43;
+  let num = Math.floor(Math.random() * 100) + 1;
 
   function guessTheNumber() {
     let userNum = prompt('Угадай число от 1 до 100');
