@@ -8,9 +8,12 @@ const week = ['Понедельник', 'Вторник', 'Среда', 'Чет�
 
 for (let i = 0; i < week.length; i++)
 {
-  var now = new Date();
-  if (i === 5 || i === 6) {
-    if (now.getDay() === (i+1)) { 
+  const now = new Date();
+  const options = { weekday: 'long'};
+  const weekday = new Intl.DateTimeFormat('ru-RU', options).format(now);
+
+  if (week[i] === 'Суббота' || week[i] === 'Воскресенье') {
+    if (week[i].toLowerCase() === weekday) { 
       document.body.innerHTML += week[i].bold().italics();
       document.body.innerHTML += '<br>'; 
     }
@@ -20,7 +23,7 @@ for (let i = 0; i < week.length; i++)
     }
   }
   else {
-    if (now.getDay() === (i+1)) { 
+    if (week[i].toLowerCase() === weekday) { 
       document.body.innerHTML += week[i].bold(); 
       document.body.innerHTML += '<br>';
     }
