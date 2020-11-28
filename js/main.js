@@ -4,37 +4,29 @@ let isNumber = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
-function game() {
-  let num = Math.floor(Math.random() * 100) + 1;
+const week = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
 
-  function guessTheNumber() {
-    let userNum = prompt('Угадай число от 1 до 100');
-    // console.log('userNum: ', userNum);
-    if (userNum === null) {
-      alert('Игра окончена');
+for (let i = 0; i < week.length; i++)
+{
+  var now = new Date();
+  if (i === 5 || i === 6) {
+    if (now.getDay() === (i+1)) { 
+      document.body.innerHTML += week[i].bold().italics();
+      document.body.innerHTML += '<br>'; 
     }
-    else
-    {
-      if (!isNumber(userNum)) {
-        alert('Введи число!');
-        guessTheNumber();
-      }
-      else {
-        if (userNum > num) {
-          alert('Загаданное число меньше');
-          guessTheNumber();
-        }
-        if (userNum < num) {
-          alert('Загаданное число больше');
-          guessTheNumber();
-        }
-        if (+userNum === num) {
-          confirm('Поздравляю, Вы угадали!!!');
-        }
-      }
-    } 
+    else {
+      document.body.innerHTML += week[i].italics(); 
+      document.body.innerHTML += '<br>';
+    }
   }
- return guessTheNumber();
+  else {
+    if (now.getDay() === (i+1)) { 
+      document.body.innerHTML += week[i].bold(); 
+      document.body.innerHTML += '<br>';
+    }
+    else { 
+      document.body.innerHTML += week[i];
+      document.body.innerHTML += '<br>'; 
+    }
+  }
 }
-
-game();
