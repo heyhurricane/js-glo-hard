@@ -1,62 +1,33 @@
 'use strict';
 
-let isNumber = function(n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
-};
+let books = document.querySelectorAll('.book');
 
-function declensionOfNouns(num, words) {
-  num = Math.abs(num) % 100; 
-  let num2 = num % 10;
-  if (num > 10 && num < 20) { 
-    return words[2]; 
-  }
-  if (num2 > 1 && num2 < 5) { 
-    return words[1]; 
-  }
-  if (num2 === 1) { 
-    return words[0]; 
-  }
-  return words[2];
-}
+books[5].after(books[2]);
+books[0].before(books[1]);
+books[4].after(books[3]);
 
-function addZero(number) {
-  if (number.toString().length === 1) {
-    let newNum = "0";
-    newNum += number;
-    number = newNum;
-  }
-  return number;
-}
+document.body.style.backgroundImage = 'url(../image/you-dont-know-js.jpg)';
 
-function mainFunc() {
-  const now = new Date();
-  let options = { 
-    month: 'long',
-    day: 'numeric',
-    weekday: 'long'
-  };
-  let weekday = new Intl.DateTimeFormat('ru', options).format(now);
+let title = books[4].querySelector('h2');
+title.textContent = 'Книга 3. this и Прототипы Объектов';
 
-  weekday = weekday.toLocaleString();
+let commercial = document.querySelector('.adv');
+commercial.remove();
 
-  let weekdayUpper = weekday[0].toUpperCase();
-  for (let i = 1; i < weekday.length; i++) {
-    weekdayUpper += weekday[i];
-  }
-  const hours = now.getHours();
+let chapters = books[0].querySelectorAll('li');
 
-  document.body.innerHTML = 'Сегодня ' + weekdayUpper + ' ' + now.getFullYear() + ' года, ';
-  document.body.innerHTML += now.getHours() + ' ' + declensionOfNouns(now.getHours(), ['час', 'часа', 'часов']) + ' ';
-  document.body.innerHTML += now.getMinutes() + ' ';
-  document.body.innerHTML += declensionOfNouns(now.getMinutes(), ['минута', 'минуты', 'минут']) + ' ';
-  document.body.innerHTML += now.getSeconds() + ' ';
-  document.body.innerHTML += declensionOfNouns(now.getSeconds(), ['секунда', 'секунды', 'секунд']);
-  document.body.innerHTML += '<br>';
+chapters[9].after(chapters[2]);
+chapters[3].after(chapters[6]);
+chapters[6].after(chapters[8]);
 
+let chapters2 = books[5].querySelectorAll('li');
 
-  document.body.innerHTML += addZero(now.getDate()) + '.' + addZero(now.getUTCMonth()+1) +'.';
-  document.body.innerHTML += now.getFullYear() + ' - ' + addZero(now.getHours()) + ':';
-  document.body.innerHTML += addZero(now.getMinutes()) + ':' + addZero(now.getSeconds());
-}
+chapters2[1].after(chapters2[9]);
+chapters2[4].after(chapters2[2]);
+chapters2[7].after(chapters2[5]);
 
-setInterval(mainFunc, 1000);
+const newChapter = document.createElement('li');
+newChapter.textContent = 'Глава 8: За пределами ES6';
+
+let chapters3 = books[2].querySelectorAll('li');
+chapters3[8].after(newChapter);
