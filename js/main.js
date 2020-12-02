@@ -8,7 +8,7 @@ books[4].after(books[3]);
 
 document.body.style.backgroundImage = 'url(../image/you-dont-know-js.jpg)';
 
-let title = books[4].querySelector('h2');
+let title = books[4].querySelector('h2 > a');
 title.textContent = 'Книга 3. this и Прототипы Объектов';
 
 let commercial = document.querySelector('.adv');
