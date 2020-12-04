@@ -1,33 +1,75 @@
 'use strict';
 
-let books = document.querySelectorAll('.book');
+const todoControl = document.querySelector('.todo-control'),
+headerInput = document.querySelector('.header-input'),
+todoList = document.querySelector('.todo-list'), 
+todoCompleted = document.querySelector('.todo-completed '); 
 
-books[5].after(books[2]);
-books[0].before(books[1]);
-books[4].after(books[3]);
+let todoData = JSON.parse(localStorage.getItem("todoData"));
 
-document.body.style.backgroundImage = 'url(../image/you-dont-know-js.jpg)';
+  // получение дел из локалсторедж
+//   {
+//     value: 'Сварить кофе',
+//     completed: false
+//   },
+//   {
+//     value: 'Помыть посуду',
+//     completed: true
+//   }
+// ];
+//  
 
-let title = books[4].querySelector('h2 > a');
-title.textContent = 'Книга 3. this и Прототипы Объектов';
+const render = function() {
+  todoList.textContent = '';
+  todoCompleted.textContent = '';
+  if (todoData === null) {
+    todoData = [];
+  }
+  if (todoData !== '') {
+    todoData.forEach(function(item){
+      const li = document.createElement('li');
+      li.classList.add('todo-item');
+      li.innerHTML = '<span class="text-todo">' + item.value + '</span>' +
+      '<div class="todo-buttons">' + '<button class="todo-remove"></button>' + 
+      '<button class="todo-complete"></button>' + '</div>';
+      if (item.completed) {
+        todoCompleted.append(li);
+      }
+      else {
+        todoList.append(li);
+      }
 
-let commercial = document.querySelector('.adv');
-commercial.remove();
+      const todoComplete = li.querySelector('.todo-complete'); 
+      const todoRemove = li.querySelector('.todo-remove'); 
+      todoComplete.addEventListener('click', function(){
+        item.completed = !item.completed;
+        render();
+      });
+      todoRemove.addEventListener('click', function(){
+        let num = todoData.indexOf(item);
+        console.log('num: ', num);
+        todoData.splice(num, 1);
+        render();
+      });
+    });
+  }
+  localStorage.setItem('todoData', JSON.stringify(todoData));
+};
 
-let chapters = books[0].querySelectorAll('li');
+todoControl.addEventListener('submit', function(event){
+  event.preventDefault();
+  const newTodo = {
+    value: headerInput.value,
+    completed: false
+  };
+  if (newTodo.value !== '') {
+    todoData.push(newTodo);
+  }
+  else {
+    alert('Пустое значение!');
+  }
+  render();
+  headerInput.value = '';
+});
 
-chapters[9].after(chapters[2]);
-chapters[3].after(chapters[6]);
-chapters[6].after(chapters[8]);
-
-let chapters2 = books[5].querySelectorAll('li');
-
-chapters2[1].after(chapters2[9]);
-chapters2[4].after(chapters2[2]);
-chapters2[7].after(chapters2[5]);
-
-const newChapter = document.createElement('li');
-newChapter.textContent = 'Глава 8: За пределами ES6';
-
-let chapters3 = books[2].querySelectorAll('li');
-chapters3[8].after(newChapter);
+ render();
