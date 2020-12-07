@@ -1,22 +1,8 @@
 'use strict';
 
-let isNumber = function(n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
-};
 
 const colorNum = document.querySelector('.color'),
 button = document.querySelector('button'); 
-
-const formatter = new Intl.DateTimeFormat("ru", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-  hour: "numeric",
-  minute: "numeric",
-  second: "numeric"
-});
-
-let users = JSON.parse(localStorage.getItem("users"));
 
 const rand = function() {
   const letters = '0123456789ABCDEF';
