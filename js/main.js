@@ -1,75 +1,118 @@
 'use strict';
 
-const todoControl = document.querySelector('.todo-control'),
-headerInput = document.querySelector('.header-input'),
-todoList = document.querySelector('.todo-list'), 
-todoCompleted = document.querySelector('.todo-completed '); 
+let isNumber = function(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+};
 
-let todoData = JSON.parse(localStorage.getItem("todoData"));
+const btnRegistr = document.querySelector('.registr'),
+btnLogin = document.querySelector('.login'),
+userList = document.querySelector('.list'), 
+heading = document.querySelector('.heading'); 
 
-  // получение дел из локалсторедж
-//   {
-//     value: 'Сварить кофе',
-//     completed: false
-//   },
-//   {
-//     value: 'Помыть посуду',
-//     completed: true
-//   }
-// ];
-//  
+const formatter = new Intl.DateTimeFormat("ru", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  second: "numeric"
+});
+
+let users = JSON.parse(localStorage.getItem("users"));
 
 const render = function() {
-  todoList.textContent = '';
-  todoCompleted.textContent = '';
-  if (todoData === null) {
-    todoData = [];
+  userList.textContent = '';
+  if (users === null) {
+    users = [];
   }
-  if (todoData !== '') {
-    todoData.forEach(function(item){
+  if (users !== '') {
+    users.forEach(function(item){
       const li = document.createElement('li');
-      li.classList.add('todo-item');
-      li.innerHTML = '<span class="text-todo">' + item.value + '</span>' +
-      '<div class="todo-buttons">' + '<button class="todo-remove"></button>' + 
-      '<button class="todo-complete"></button>' + '</div>';
-      if (item.completed) {
-        todoCompleted.append(li);
-      }
-      else {
-        todoList.append(li);
-      }
-
-      const todoComplete = li.querySelector('.todo-complete'); 
-      const todoRemove = li.querySelector('.todo-remove'); 
-      todoComplete.addEventListener('click', function(){
-        item.completed = !item.completed;
-        render();
-      });
-      todoRemove.addEventListener('click', function(){
-        let num = todoData.indexOf(item);
+      li.classList.add('user');
+      li.innerHTML = '<span class="user">' + item.name + ' ' + item.lastName + ' ' +
+      item.dateRegistration + '</span>' +
+      '<div class="user-buttons">' + '<button class="user-remove">Удалить</button>' + 
+      '</div>';
+      userList.append(li);
+     
+      const userRemove = li.querySelector('.user-remove'); 
+      userRemove.addEventListener('click', function(){
+        let num = users.indexOf(item);
         console.log('num: ', num);
-        todoData.splice(num, 1);
+        users.splice(num, 1);
         render();
       });
     });
   }
-  localStorage.setItem('todoData', JSON.stringify(todoData));
+  localStorage.setItem('users', JSON.stringify(users));
 };
 
-todoControl.addEventListener('submit', function(event){
-  event.preventDefault();
-  const newTodo = {
-    value: headerInput.value,
-    completed: false
+btnRegistr.addEventListener('click', function(){
+  let userName;
+  let userLogin;
+  let userPassword;
+  let newName;
+  do {
+    userName = prompt('Введите Ваше Имя и Фамилию через пробел');
+    newName = userName.toLowerCase().split(" ");
+    for (let i = 0; i < newName.length; i++)
+    {
+      let word = newName[i];
+      let newWord = word[0].toUpperCase();
+      for (let j = 1; j < word.length; j++) {
+        newWord += word[j];
+      }
+      newName[i] = newWord;
+    }
+  }
+  while (isNumber(userName) || newName.length !== 2);
+
+  do {
+    userLogin = prompt('Введите Ваш Логин');
+  }
+  while (userLogin === '');
+
+  do {
+    userPassword = prompt('Введите Пароль');
+  }
+  while (userPassword === '');
+
+  const newUser = {
+    name: newName[0],
+    lastName: newName[1],
+    login: userLogin,
+    password: userPassword,
+    dateRegistration: formatter.format(new Date())
   };
-  if (newTodo.value !== '') {
-    todoData.push(newTodo);
-  }
-  else {
-    alert('Пустое значение!');
-  }
+
+  users.push(newUser);
   render();
-  headerInput.value = '';
 });
 
- render();
+btnLogin.addEventListener('click', function(){
+  let userLogin;
+  let userPassword;
+  do {
+    userLogin = prompt('Введите Ваш Логин');
+  }
+  while (userLogin === '');
+
+  do {
+    userPassword = prompt('Введите Пароль');
+  }
+  while (userPassword === '');
+  let count = 0;
+  users.forEach(function(item){
+    if (item.login === userLogin && item.password === userPassword) {
+      heading.textContent = 'Привет, ' + item.name + '!';
+    }
+    else {
+      count++;
+    }
+  });
+  if (count === users.length) { alert('Пользователь не найден!'); }
+});
+
+
+render();
+ 
