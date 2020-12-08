@@ -1,24 +1,32 @@
 'use strict';
 
-
-const colorNum = document.querySelector('.color'),
-button = document.querySelector('button'); 
-
-const rand = function() {
-  const letters = '0123456789ABCDEF';
-  let color = '#';
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
+function DomElement(selector, height, width, bg, fontSize) {
+  this.selector = selector;
+  this.height = height;
+  this.width = width;
+  this.bg = bg;
+  this.fontSize = fontSize;
+}
+ 
+DomElement.prototype.createElem = function() {
+  let name = '';
+  let newElem;
+  const str = this.selector;
+    for (let i = 1; i < str.length; i++) {
+      name += str[i];
+    }
+  if (str[0] === '.') {
+    newElem = document.createElement('div');
+    newElem.classList.add(name);
   }
-  document.body.style.backgroundColor = color;
-  colorNum.textContent = color;
+  if (str[0] === '#') {
+    newElem = document.createElement('p');
+    newElem.setAttribute('id', name);
+  }
+  newElem.style.cssText = 'background-color: ' + this.bg + '; width: ' + this.width + 'px; height: ' + this.height + 'px; font-size: ' + this.fontSize + 'px;';
+  newElem.textContent = 'Новый элемент создан';
+  document.body.append(newElem);
 };
 
-
-button.addEventListener('click', function(){
- rand();
-});
-
-
-rand();
- 
+let elem = new DomElement('.block', 100, 200, '#eeeeee', 14);
+elem.createElem();
