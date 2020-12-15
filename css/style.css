@@ -1,9 +1,26 @@
-input {
-  font-size: 16px;
-  border: 1px solid black;
-  outline: none;
+body {
+  background: url('https://img5.goodfon.ru/wallpaper/nbig/3/5b/cosmos-rozovye-field-summer-nebo-solntse-leto-colorful-lug-p.jpg') no-repeat;
+  background-size: cover;
+}
+.bee {
+  max-width: 300px;
+  position: relative
+}
+.bee img {
+  width: 300px;
 }
 
-p {
-  font-size: 32px;
+button {
+  border: none;
+  outline: none;
+  background-color: #FBD11D;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.buttons {
+  bottom: 1%;
+  position: absolute;
 }
